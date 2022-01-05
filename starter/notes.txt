@@ -1,0 +1,335 @@
+- global reset: 
+    * {
+        }
+- box-sizing:   change the box model so that the padding and margins are no 
+                longer added to the total width r height that we specify for the box
+- background-size: cover
+    Fills the entire set viewport with the image
+- background-position: top/bottom/center
+    While resizing, its keeps the set position of the background fixed and changes the rest accordingly
+
+***Always keep images inside a container as they are inline properties
+*** when using 'position:absolute', the position attributes like 'top,left' etc is calculated w.r.t the parent element
+    whose position is 'relative'
+
+- animation
+    - 'backface-visibility: hidden' is used to remove the shakines after an animation
+    - 'box-shadow' fields are x-axis, y-axis, opacity, shadow-color (r,g,b,visibility)
+
+- Three pillars of Web Desogning
+    - Responsive Design
+        - fluid layouts
+        - media queries
+        - repsonsive images
+        - correct units
+        - desktop-first vs mobile-first
+
+    - Maintainable and Scalable code
+        - clean, easy to understand
+        - growth
+        - how to organize files
+        - how to name classes
+        - how to structure HTML
+
+    - Web performance
+        - less http requests
+        - less code
+        - compress code
+        - use a CSS preprocessor
+        - less image
+        - compress image
+    - Priority of CSS: Importance > Specificity > Source code order
+    - Importance
+        User !important > Author !important > Author > User > Browser
+    - Specificity
+        Inline > ID > class/pseudo-class/attributes > elements/pseudo-elements
+    
+    *** Parent element's size is reference for % based calculations
+    *** 'em' uses parent element whereas 'rem' uses root as reference
+    *** 'em' for fonts uses parent element and 'em' for length uses current element as reference
+
+    - Default font size by browser is 16px
+
+    - Inheritance
+        - it passes the value of some specific properties from parent to children
+        - properties related to text are inherited: font-family, size, color etc
+        - computed value of a property is what gets inherited, not the declared value
+        - inherit keyword is used to enforce inheritance on certain property
+        - intial keyword is used to reset a property to initial value
+
+    *** Set html font-size and use 'rem' as unit for measurement.
+    - BEM (B-lock E-lement M-odifier)
+        - Block: standalone component meaningful on its own  [   .block{}   ]
+        - Element: part of a block that has no standalone meaning  [ .block__element{} ]
+        - Modifier: a different version of a block/element [ .block__element--modifier{} ]
+    
+    - 7-1 Pattern
+        - 7 folders for partial Saas files, then 1 main Saas file to import all the 7 folders
+          and compile them into a single style sheet
+        - 7 folders used here are:
+            - base/
+            - component/
+            - layout/
+            - pages/
+            - themes/
+            - abstracts/
+            - vendors/
+
+    - SASS
+        - a CSS preprocessor; extension of CSS that adds power and elegance to basic CSS
+    - Sass: Features
+        - variables: for reusables values like font-size, spacing etc
+        - nesting: to nest selectors one inside the other
+        - operators: for mathematical operations inside css
+        - partials and imports: to write css in different files and bind them in one
+        - mixins: to write reusable piece of code
+        - functions: similar to mixins, but also produce a value
+        - extends: to make different selectors inherit declarations that are common to them all
+        - control directives: for writing complex codes using conditionals and loops
+    
+    - '&' is used to add psudo classes or attributes
+    - '&' is alias for the immediate parent element/class etc    
+    
+    - DRY: Dont Repeat Yourself / Code Reusability
+        - mixins
+            - pieces of reusable code.
+            - defined by using @mixin <mixin_name>(parameters) and implemented using @include <mixin_name>
+            - parameters are optional
+        - extends
+            - same as mixins, but it adds the links/elements to the extend block, whereas mixins copies the block of code
+                to those elements's block
+
+    - Basic repsonsive Design principles
+        - Fluid layouts: use % or vh/vw, use max-width instead of width
+        - Responsive units: use rem instead of px; easy to scale
+        - Flexible images: use % for image dimensions, use max-width property
+        - Media queries: chaange CSS styles on certain viewports widhts(breakpoint)
+    
+    - layouts
+        - Float: old way
+        - Flexbox: 1-D layouts
+        - CSS Grid: 2-D layouts and complex components
+
+    
+------------------------------------------------------------------------------------
+COLORS:
+
+Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+
+- Reset the browser enforcing inherit on box-sizing, so that it becomes an inheritable 
+    property
+
+- setting font-size to 10px; default size=16px  => 100% is 16px => 62.5% is 10px
+    this will allow users to zoom in the default font size and still our page will
+    be retaining its correct measurements
+
+- using Regex for selecting attributes
+    - [class^="col-"] { } - select all the elements with classnames starting with 'col-'
+    - similarly [class*="col-"] - means 'containing col-'
+    - [class$="col-"] - means 'ending with col-'
+
+- Add gradient to text
+        display: inline-block;
+        background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+        -webkit-background-clip: text;
+        color: transparent;
+
+- Always try to plan before hand and reuse pieces of code to maintain a uniform style pattern
+
+-  direct child: & > * { transform: skewY(7deg); }
+
+- backface-visibility: hidden; is used to hide the back side on rotation
+
+- when an element is 'floated' we have clearfix property to fix the loss of properties,
+    but in 'position: absolute' we don't have such fix, we need to mention the same properties
+    to the parent element as well
+
+- 'background-blend-mode' for blending background image
+
+- ::after pseudo element acts like a virtual element for the element that we are selecting. In simple sense, it decides
+    how an element looks 'after' it is selected
+
+- for media queries, breakpoints are set at <=600, <=900, <=1200, >=1800.
+    so for a width which is less than 600 will also trigger <=900 and <= 1200 cases. But we dont want other cases to reflect, just the <=600 one should reflect.
+    For that, we arrange the media queries in descending order of breakpoints, because in case of conflicts, the last media query is the one that overwrites the rest.
+
+- Density Switching vs Resolution Switching
+    - use srcset attribute of 'img' element to mention the different images to be shown at different density ports
+      1x and 2x etc marks which images are to be viewed at which density
+      eg: 
+        <picture class="footer__logo">
+            <source srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x" media="(max-width: 37.5em)">
+            <img srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x" alt="Full logo.jpg" class="footer__logo">
+        </picture>
+    
+    - For resolution Switching, it does both density and resolution switching, instead of 1x, 2x etc, it mentions the width ports like 300w, 1000w, to show which image is
+      to be viewed on which width. 'sizes' attribute is used to inform the browser which image to display at which viewport width
+        eg: 
+            <img srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w" alt="Photo-1" class="composition__photo composition__photo--p1"
+            sizes="(max-width: 900px) 20vw, (max-width: 600px) 30vw, 300px">
+
+- Flexbox properties
+    - CONTAINER
+        - flex-direction: row / column / row-reverse / column-reverse
+        - flex-wrap: nowrap
+        - justify-content: flex-start
+        - align-items: stretch / center / flex-start / flex-end
+        - align-content: stretch
+
+    - ITEM
+        - align-self: auto
+        - order: 0
+        - flex-grow: 0          |
+        - flex-shrink: 1        | flex: 0 1 auto
+        - flex-basis: auto      |
+
+- align-rows: aligns rows across cross axis
+
+- align-items: aligns items across cross axis
+    - flex-start: aligns at top
+    - flex-end: aligns at bottom
+    - stretch: matches height of all the elements in a flex container
+    - baseline: align items in a straightline to match the texts in those items in a container,
+                when texts are of different font sizes
+
+- justify-content: aligns itself across main axis
+- flex-grow works in  relative manner. It grows relat to other elements within a flex container
+- flex-shrink: 1 - shrinks the flex element according to viewport width
+- flex-shrink: 0 - doesn't allow the element to shrink even if the viewport reduces
+- flex-wrap: wrap / nowrap
+    wraps items if it overflows the viewport width
+
+- flex: grow shrink basis -- shorthand
+
+- fill: currentColor --> color of current/parent element
+
+- z-index only works if we have a specified postion (like relative)
+
+- If we want flex item to occupy complete space but the active should be restricted to the elements in it.
+    - using flex: 1 --> flex grow will do that but it will make the entire area of the item as active
+    - instead use margin-right: auto (or margin: auto / margin-left: auto)--> it shrinks the active are to the elements are arranges rest of the space as right 
+    
+- align-self: stretch; --> is used to stretch an element from top to bottom of a flex container
+- mask-image
+    -- -webkit-mask-image: masks are area that helps us to look through an element and helps us to see what is behind that element
+    --  always use, -webkit-mask-size: cover  along with it
+
+- box-sizing: border-box
+    --> adds the padding and border to the width and height of the element
+
+
+==========================================================================================================================================================================
+
+CSS GRID
+
+- Container
+    - grid-template-rows
+    - grid-template-columns
+    - grid-template-areas
+
+    - grid-row-gap
+    - grid-column-gap
+
+    - justify-items
+    - align-items
+    - justify-content
+    - align-content
+
+    - grid-auto-rows
+    - grid-auto-columns
+    - grid-auto-flow
+
+- Item
+    - grid-row-start
+    - grid-row-end
+    - grid-column-start
+    - grid-column-end
+
+    - justify-self
+    - align-self
+
+    - order
+
+- new unit introduced in GRIDS known as 'fr' or fractional unit
+    - it covers or grows throughtout the remaining space in the container/grid
+    - used with grid-template-row or grid-template-column
+
+    - divides the entire container in 3 equal parts:
+        grid-template-row: 150px 150px      ---> denotes two rows
+        grid-template-column: (3, 1fr)      ---> denotes 3 columns of equal size
+
+    - line number indicators within grid container is very important in placing an element
+        using grid-row : 2 / 3 --> means starting from row no 2 and ending at row no 3
+        grid-column: 1 / 3 --> means starting from column no 1 and ending at column no 3
+        NOTE: by row and column, it means grid-gaps rowise and columnwise
+
+    - spanning : all three works same
+        - grid-column: 1 / span 2
+        - grid column: 1 / 3
+        - grid-column: 1 / -1
+
+    - Implicit and Explicit grid
+        - Used when we want to make our page dynamic. Suppose, our page will be populated with data based on an AJAX call,
+            and we don't know how many items we will be receiving, we can set them as 'implicit', then everything will be
+            arranged accrodingly whenever the data arrives.
+
+        - Explicit: rows and columns in a grid which are defined explicitely using grid-template-rows / grid-template-columns
+        - Implicit: if there are left over items which are not defined explicitely, CSS arranges them implicitely in the grid
+                    However, height of implicit grids can be adjusted using: -->  'grid-auto-rows' or 'grid-auto-columns'
+
+        - By default, left over items are added as rows because 'grid-auto-flow' is set to 'row' by default, if we set it to 
+            column explicitely, then they will be added as column --> 'grid-auto-flow: column'
+            - spanning across multiple rows with 'grid-auto-flow: row', may result in holes/blank spaces inside the grid, because 
+              css tries to maintain the order of the items. If we want to avoid holes, we use 'dense' keyword 
+              like --> 'grid-auto-flow: row dense'
+
+        
+        - justify-items: center     --> Align items vertically and horizontally across the grid cell
+        - align-items: center       --> align items in a specifi manner. By default it is stretch. [center, stretch, start, end]
+
+        - Aligning Grid Items
+            - justify-self
+            - align-self
+            - they are used to overwrite justify-items ans align-items. If we want to move one specific item in the grid.
+
+        - Aligning Tracks
+            - justify-content: aligns across horizontal / major axis
+            - align-content: aligns across vertically / cross axis
+        
+        - min-content() and max-content()
+            - max-content --> makes the content as it has to be to fit this content
+                like > grid-template-columns: max-content 1fr 1fr 1fr
+
+            - min-content --> used to prevent overflowing rows in case of excess text. Wraps the text and makes it grow across cross axis(vertically down instead of horizontally right)
+
+        - min-max()
+            - we pass two values min and max and css will make sure that the text lies in between these two values 
+            - grid-template-rows: repeat(2, minmax(150px, min-content));
+            -  grid-template-columns: minmax(200px, 300px) repeat(3, 1fr); --> first column is set between 200 to 300px, and rest columns are sized and arranged accordingly
+                                    / minmax(200px, 50%) repeat(3, 1fr)
+            - NOTE TO SELF: Although fractional unit is supposed to distribute space among them equally, but it is never less than the size of the contentm so equal distribution of space is not always satisfied.
+        
+        - auto-fill and auto-fit : auto-fit makes the layout repsonsive
+            - auto-fill --> it fills the created grid cells with items in a row-wise manner and leaves rest of the cells empty
+            - auto-fit --> it also auto-fills the cells but empty cells along the rows are overlapped over one another so that last cell of the first row is filled and rest of the rows are arranged accordingly
+                             and remaining space is just vacant(i.e., not included in the grid cell layout).
+                       --> in order for it to occupy entire space use 'grid-template-columns: repeat(auto-fit, minmax(100px, 1fr))'. This also makes the layout Responsive
+
+        - NOTE TO SELF:
+            - if you do not have items/elements under a section/div, the text in that div element acts as the grid item using ::before and ::after pseudo element
+              the part in ::before and ::after acts as the grid elements
+            - for responsive designing using GRIDS, minmax(min-content, max-content) comes really handy. it sets the spacing automatically according to the viewport 
+            - for ensuring responsiveness, always name your columns, so that on adding media queries it adjusts itself automatically, which would have been tedious with hardcoded pixel values
+            - shorthand of grid-template-columns and grid-template-rows
+                
+                syntax: grid-template: < rows settings > / < columns settings>
+
+            - Progressive Enhancement
+                - we don't need to add @supports for all elements as certain things are ignored by (Grid items and Grid containers) and (Flex items and Flex container)
+                - floats, display: inline-block, display: table, vertical align are ignored by Grid and Flex.
+                - using @supports we can build website using float as a fallback, in case css grid is not supported by some browsers 
+                - syntax:   @supports(display: grid) {
+                                <!-- css grid script --> 
+                             }
